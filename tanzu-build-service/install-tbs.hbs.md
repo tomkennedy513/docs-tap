@@ -17,17 +17,19 @@ For advanced information about installing Tanzu Build Service, see the
 Before installing Tanzu Build Service:
 
 - Complete all prerequisites to install Tanzu Application Platform.
-For more information, see [Prerequisites](../prerequisites.md).
+  For more information, see [Prerequisites](../prerequisites.md).
 
 - You must have access to a Docker registry that Tanzu Build Service can use to create builder images.
-Approximately 10&nbsp;GB of registry space is required when using the `full` dependencies.
+  Approximately 10&nbsp;GB of registry space is required when using the `full` dependencies.
 
 - Your Docker registry must be accessible with user name and password credentials.
 
 ## <a id='deprecated-features'></a> Deprecated Features
 
-- **Automatic dependency updates:** For more information, see [Configure automatic dependency updates](#auto-updates-config).
-- **The Cloud Native Buildpack Bill of Materials (CNB BOM) format:** For more information, see [Deactivate the CNB BOM format](#deactivate-cnb-bom).
+- **Automatic dependency updates:** For more information,
+  see [Configure automatic dependency updates](#auto-updates-config).
+- **The Cloud Native Buildpack Bill of Materials (CNB BOM) format:** For more information,
+  see [Deactivate the CNB BOM format](#deactivate-cnb-bom).
 
 ## <a id='tbs-tcli-install'></a> Install the Tanzu Build Service package
 
@@ -45,7 +47,7 @@ To install Tanzu Build Service by using the Tanzu CLI:
     tanzu package available get buildservice.tanzu.vmware.com/VERSION --values-schema --namespace tap-install
     ```
 
-    Where `VERSION` is the version of the Tanzu Build Service package you retrieved earlier in this procedure.
+   Where `VERSION` is the version of the Tanzu Build Service package you retrieved earlier in this procedure.
 
 2. Create the secret for the `kp-default-repository` credentials using the `tanzu` cli:
 
@@ -56,10 +58,10 @@ To install Tanzu Build Service by using the Tanzu CLI:
       --password "${REGISTRY-PASSWORD}" \
       --namespace tap-install
     ```
-   
-    Where:
-    - `REGISTRY-HOST` is the host name for the registry that contains your `kp_default_repository`. 
-       For example:
+
+   Where:
+    - `REGISTRY-HOST` is the host name for the registry that contains your `kp_default_repository`.
+      For example:
         - Harbor has the form `server: "my-harbor.io"`.
         - Docker Hub has the form `server: "index.docker.io"`.
         - Google Cloud Registry has the form `server: "gcr.io"`.
@@ -81,27 +83,27 @@ To install Tanzu Build Service by using the Tanzu CLI:
       namespace: tap-install
     ```
 
-    Where:
+   Where:
     - `REPO-NAME` is a writable repository in your registry.
-    Tanzu Build Service dependencies are written to this location. Examples:
-      - Harbor has the form `"my-harbor.io/my-project/build-service"`.
-      - Docker Hub has the form `"my-dockerhub-user/build-service"` or `"index.docker.io/my-user/build-service"`.
-      - Google Cloud Registry has the form `"gcr.io/my-project/build-service"`.
+      Tanzu Build Service dependencies are written to this location. Examples:
+        - Harbor has the form `"my-harbor.io/my-project/build-service"`.
+        - Docker Hub has the form `"my-dockerhub-user/build-service"` or `"index.docker.io/my-user/build-service"`.
+        - Google Cloud Registry has the form `"gcr.io/my-project/build-service"`.
 
 4. If you are running on OpenShift, add `kubernetes_distribution: openshift` to your `tbs-values.yaml` file.
 
 5. (Optional) Under the `ca_cert_data` key in the `tbs-values.yaml` file,
-provide a PEM-encoded CA certificate for Tanzu Build Service.
-This certificate is used for accessing the container image registry and is also provided to the build process.
+   provide a PEM-encoded CA certificate for Tanzu Build Service.
+   This certificate is used for accessing the container image registry and is also provided to the build process.
 
-    > **Note** If `shared.ca_cert_data` is configured in the `tap-values.yaml` file,
-    > Tanzu Build Service inherits that value.
-    >
-    > Configuring `ca_cert_data` key in the `tbs-values.yaml` file adds the CA certificates at build time.
-    > To add CA certificates to the built image, see
-    > [Configure custom CA certificates for a single workload using service bindings](tbs-workload-config.md#custom-cert-single-workload).
+   > **Note** If `shared.ca_cert_data` is configured in the `tap-values.yaml` file,
+   > Tanzu Build Service inherits that value.
+   >
+   > Configuring `ca_cert_data` key in the `tbs-values.yaml` file adds the CA certificates at build time.
+   > To add CA certificates to the built image, see
+   > [Configure custom CA certificates for a single workload using service bindings](tbs-workload-config.md#custom-cert-single-workload).
 
-    For example:
+   For example:
 
     ```yaml
     ---
@@ -116,8 +118,9 @@ This certificate is used for accessing the container image registry and is also 
     ```
 
 1. (Optional) Tanzu Build Service is bootstrapped with the `lite` set of dependencies.
-To configure `full` dependencies, add the key-value pair `exclude_dependencies: true`
-to your `tbs-values.yaml` file. This is to exclude the default `lite` dependencies from the installation. For example:
+   To configure `full` dependencies, add the key-value pair `exclude_dependencies: true`
+   to your `tbs-values.yaml` file. This is to exclude the default `lite` dependencies from the installation. For
+   example:
 
     ```yaml
     ---
@@ -128,8 +131,8 @@ to your `tbs-values.yaml` file. This is to exclude the default `lite` dependenci
     exclude_dependencies: true
     ```
 
-    For more information about the differences between `full` and `lite` dependencies, see
-    [About lite and full dependencies](dependencies.md#lite-vs-full).
+   For more information about the differences between `full` and `lite` dependencies, see
+   [About lite and full dependencies](dependencies.md#lite-vs-full).
 
 1. Install the Tanzu Build Service package by running:
 
@@ -137,9 +140,9 @@ to your `tbs-values.yaml` file. This is to exclude the default `lite` dependenci
     tanzu package install tbs -p buildservice.tanzu.vmware.com -v VERSION -n tap-install -f tbs-values.yaml
     ```
 
-    Where `VERSION` is the version of the Tanzu Build Service package you retrieved earlier.
+   Where `VERSION` is the version of the Tanzu Build Service package you retrieved earlier.
 
-    For example:
+   For example:
 
     ```console
     $ tanzu package install tbs -p buildservice.tanzu.vmware.com -v VERSION -n tap-install -f tbs-values.yaml
@@ -164,7 +167,7 @@ to your `tbs-values.yaml` file. This is to exclude the default `lite` dependenci
     ```
 
 3. If you configured `full` dependencies in your `tbs-values.yaml` file, install the `full` dependencies
-by following the procedure in [Install full dependencies](#tap-install-full-deps).
+   by following the procedure in [Install full dependencies](#tap-install-full-deps).
 
 ### <a id='tbs-tcli-install-ecr'></a> Use AWS IAM authentication for registry credentials
 
@@ -174,12 +177,12 @@ Amazon Elastic Container Registry (ECR) on Amazon Elastic Kubernetes Service (EK
 To use AWS IAM authentication:
 
 1. Configure an AWS IAM role that has read and write access to the repository in the container image
-registry used when installing Tanzu Application Platform.
+   registry used when installing Tanzu Application Platform.
 
 1. Use the following alternative configuration for `tbs-values.yaml`:
 
-    >**Note** if you are installing Tanzu Build Service as part of a Tanzu Application Platform
-    >profile, you configure this in your `tap-values.yaml` file under the `buildservice` section.
+   > **Note** if you are installing Tanzu Build Service as part of a Tanzu Application Platform
+   >profile, you configure this in your `tap-values.yaml` file under the `buildservice` section.
 
     ```yaml
     ---
@@ -187,10 +190,10 @@ registry used when installing Tanzu Application Platform.
       kp_default_repository_aws_iam_role_arn: "IAM-ROLE-ARN"
     ```
 
-    Where:
+   Where:
 
     - `REPO-NAME` is a writable repository in your registry.
-    Tanzu Build Service dependencies are written to this location.
+      Tanzu Build Service dependencies are written to this location.
     - `IAM-ROLE-ARN` is the AWS IAM role Amazon Resource Name (ARN) for the role configured earlier in this procedure.
     For example, `arn:aws:iam::xyz:role/my-install-role`.
 
@@ -220,15 +223,16 @@ ARN configured earlier by running:
 If you configured `full` dependencies in your `tbs-values.yaml` file, you must
 install the `full` dependencies package.
 
-For a more information about `lite` and `full` dependencies, see [About lite and full dependencies](dependencies.md#lite-vs-full).
+For a more information about `lite` and `full` dependencies,
+see [About lite and full dependencies](dependencies.md#lite-vs-full).
 
 To install `full` Tanzu Build Service dependencies:
 
 1. If you have not done so already, add the key-value pair `exclude_dependencies: true`
- to your `tbs-values.yaml` file. For example:
+   to your `tbs-values.yaml` file. For example:
 
-    >**Note** if you are installing Tanzu Build Service as part of a Tanzu Application Platform
-    >profile, you configure this in your `tap-values.yaml` file under the `buildservice` section.
+   > **Note** if you are installing Tanzu Build Service as part of a Tanzu Application Platform
+   >profile, you configure this in your `tap-values.yaml` file under the `buildservice` section.
 
     ```yaml
     ---
@@ -238,8 +242,9 @@ To install `full` Tanzu Build Service dependencies:
         namespace: tap-install
       exclude_dependencies: true
     ```
- 
-1. If you have not updated your package install after adding the `exclude_dependencies: true` to your values file, you must perform the update by running:
+
+1. If you have not updated your package install after adding the `exclude_dependencies: true` to your values file, you
+   must perform the update by running:
 
     ```console
     tanzu package installed update  APP-NAME --namespace tap-install --values-file PATH-TO-UPDATED-VALUES
@@ -258,7 +263,7 @@ To install `full` Tanzu Build Service dependencies:
     --to-repo INSTALL-REGISTRY-HOSTNAME/TARGET-REPOSITORY/tbs-full-deps
     ```
 
-    Where:
+   Where:
 
     - `VERSION` is the version of the Tanzu Build Service package you retrieved earlier in this procedure.
     - `INSTALL-REGISTRY-HOSTNAME` is your container image registry.
@@ -272,7 +277,7 @@ To install `full` Tanzu Build Service dependencies:
       --namespace tap-install
     ```
 
-    Where:
+   Where:
 
     - `VERSION` is the version of the Tanzu Build Service package you retrieved earlier.
     - `INSTALL-REGISTRY-HOSTNAME` is your container image registry.
@@ -284,9 +289,57 @@ To install `full` Tanzu Build Service dependencies:
     tanzu package install full-tbs-deps -p full-deps.buildservice.tanzu.vmware.com -v "> 0.0.0" -n tap-install --values-file PATH-TO-TBS-OR-TAP-VALUES-FILE
     ```
 
-## <a id='deactivate-cnb-bom'></a> (Optional) Deactivate the CNB BOM format
+## <a id="tap-install-automatic-dependency-updates"></a> Enable Automatic Dependency Updates
 
-The legacy CNB BOM format is deprecated, but is enabled by default in Tanzu Application Platform.
+TAP ships with the ability to configure TBS dependencies to be updated. These updates are provided
+through a separate package repository with available version lines for all supported TAP minor versions.
+Within a version line, only patch versions are incremented to avoid any possible breaking changes. Users can 
+customize the packages that can be updated through tap-values or their full deps values.
 
-To manually deactivate the format, add `include_legacy_bom=false` to either the `tbs-values.yaml` file,
-or to the `tap-values.yaml` file under the `buildservice` section.
+1. Add the following to tap-values.yaml:
+
+    ```yaml
+    buildservice:
+      dependency_updates:
+      allow: true
+      scope: <SCOPE>
+      include_packages: [""]
+      exclude_packages: [""]
+    ```
+    Where:
+    - `SCOPE` is the list of dependencies you would like to be updated. 
+        The options are:
+        - `stacks-only` (default value): only stacks and builders are updated
+        - `all`: stacks, builders, and buildpacks are updated
+        - `custom`: this list is empty by default, use the `include_packages` key to add packages to be updated
+
+<p class="note"><strong>Note:</strong> The TAP package install will need to be updated after changing tap-values</p>
+
+2. Create a secret for VMware Tanzu Network using the `tanzu` cli:
+
+    ```commandline
+     tanzu secret registry add tanzunet-creds \
+     --server "registry.tanzu.vmware.com" \
+     --username "${TANZUNET_REGISTRY_USERNAME}" \
+     --password "${TANZUNET_REGISTRY_PASSWORD}" \
+     --namespace ${INSTALL_NAMESPACE}
+   ```
+3. Add the Tanzu Build Service Dependency Updates package repository by running:
+   
+   ```
+   kubectl apply -f - <<EOF
+     apiVersion: packaging.carvel.dev/v1alpha1
+     kind: PackageRepository
+     metadata:
+       name: tbs-dependencies-package-repository
+       namespace: tap-install
+     spec:
+       fetch:
+         imgpkgBundle:
+           image: registry.tanzu.vmware.com/build-service-dependency-updates/package-repo
+           tagSelection:
+             semver:
+             # this should be TAP major.minor.x
+               constraints: "1.8.x"
+   EOF
+   ```
